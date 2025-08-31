@@ -1,21 +1,20 @@
-import requests
-from bs4 import BeautifulSoup
 import csv
-import cloudscraper
 import time
+
+from bs4 import BeautifulSoup
+import cloudscraper
+# import requests
 
 # headers = {
 #     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36"
 # }
-
 # seja = requests.Session()
-
 # odziv = requests.get("https://www.basketball-reference.com/leagues/NBA_2000_per_game.html")
 # print(odziv.status_code)
 # print(odziv.text)
 
-
 scraper = cloudscraper.create_scraper()
+scraper.encoding = "utf-8"
 
 podatki_vseh_let = []
 for leto in range(2000, 2025):
@@ -25,7 +24,7 @@ for leto in range(2000, 2025):
     # print(odziv.text)
 
 
-    soup = BeautifulSoup(odziv.text, 'html.parser')
+    soup = BeautifulSoup(odziv.content.decode("utf-8"), 'html.parser')
     tabela = soup.find("table")
     glava = tabela.find("thead")
     glavna_vrstica = glava.find("tr")
@@ -64,7 +63,7 @@ for leto in range(2000, 2025):
 
     time.sleep(2)   # program spi dve sekundi, da ne pošiljamo preveć zahtev na enkrat
 
-with open("pridobivanje_podatkov/podatki.csv", "w",newline="", encoding="utf-8") as f:
+with open("pridobivanje_podatkov/podatki.csv", "w", newline="", encoding="utf-8") as f:
     writer = csv.writer(f)
     writer.writerow(imena_stolpcev)
     writer.writerows(podatki_vseh_let)
