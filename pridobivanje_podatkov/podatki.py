@@ -38,6 +38,7 @@ for leto in range(2000, 2025):
         imena_stolpcev.append(celica.text)
     imena_stolpcev.append("Year")  # v tabelo dodam stolpec leto
 
+
     # print(imena_stolpcev)
 
     telo = tabela.find("tbody")
